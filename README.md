@@ -65,7 +65,7 @@ CMD ["node", "server.js"]
 docker build -t node-app:1.0 .
 ```
 
-#### Run Container From The node-app:1.0 Image
+#### Run Container From The node-app:1.0 Image
 
 ```bash
 docker run -d -p 3000:3000 node-app:1.0
