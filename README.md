@@ -70,3 +70,5 @@ docker build -t node-app:1.0 .
 ```bash
 docker run -d -p 3000:3000 node-app:1.0
 ```
+
+The port defined here is `9000`. So navigate to `http://localhost:3000` and see the application working!
