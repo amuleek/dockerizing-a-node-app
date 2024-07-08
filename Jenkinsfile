@@ -38,7 +38,7 @@ pipeline {
 
         stage('Run Docker Container Locally') {
             steps {
-                sh 'docker run -d -p 3000:3000 ${DOCKERHUB_REPO}:${IMAGE_TAG}' // Run the Docker container locally
+                sh 'docker run -d -p 4000:4000 ${DOCKERHUB_REPO}:${IMAGE_TAG}' // Run the Docker container locally
             }
         }
     }
