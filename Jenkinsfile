@@ -23,15 +23,20 @@ pipeline {
         stage('Login to DockerHub') {
     steps {
         script {
+            // Login to DockerHub using credentials from Jenkins
             withCredentials([usernamePassword(credentialsId: 'DOCKERHUB_CREDENTIALS', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
-                sh 'docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD'
+                sh "docker login -u $DOCKER_USERNAME --password-stdin <<< '$DOCKER_PASSWORD'"
             }
         }
     }
-            steps {
-                sh 'docker push ${DOCKERHUB_REPO}:${IMAGE_TAG}' // Push the image to DockerHub
-            }
-        }
+}
+
+stage('Push Docker Image to DockerHub') {
+    steps {
+        // Push the Docker image to DockerHub
+        sh "docker push ${DOCKERHUB_REPO}:${IMAGE_TAG}"
+    }
+}
 
         stage('Run Docker Container Locally') {
             steps {
