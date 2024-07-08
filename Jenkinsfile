@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         DOCKERHUB_CREDENTIALS = 'dockerhub-credentials' // ID for DockerHub credentials stored in Jenkins
-        DOCKERHUB_REPO = "amuleeksidhu/sampl" // DockerHub repository
+        DOCKERHUB_REPO = "amuleeksidhu/sample" // DockerHub repository
         IMAGE_TAG = "latest" // Tag for the Docker image
     }
 
