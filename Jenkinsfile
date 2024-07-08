@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         DOCKERHUB_CREDENTIALS = 'dockerhub-credentials' // ID for DockerHub credentials stored in Jenkins
-        DOCKERHUB_REPO = "amuleeksidhu/sample" // DockerHub repository
+        DOCKERHUB_REPO = "amuleeksidhu/sampl" // DockerHub repository
         IMAGE_TAG = "latest" // Tag for the Docker image
     }
 
@@ -21,22 +21,20 @@ pipeline {
         }
 
         stage('Login to DockerHub') {
-    steps {
-        script {
-            // Login to DockerHub using credentials from Jenkins
-            withCredentials([usernamePassword(credentialsId: 'DOCKERHUB_CREDENTIALS', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
-                sh "docker login -u $DOCKER_USERNAME --password-stdin <<< '$DOCKER_PASSWORD'"
+            steps {
+                script {
+                    withCredentials([usernamePassword(credentialsId: DOCKERHUB_CREDENTIALS, usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
+                        sh 'echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin' // Login to DockerHub
+                    }
+                }
             }
         }
-    }
-}
 
-stage('Push Docker Image to DockerHub') {
-    steps {
-        // Push the Docker image to DockerHub
-        sh "docker push ${DOCKERHUB_REPO}:${IMAGE_TAG}"
-    }
-}
+        stage('Push Docker Image to DockerHub') {
+            steps {
+                sh 'docker push ${DOCKERHUB_REPO}:${IMAGE_TAG}' // Push the image to DockerHub
+            }
+        }
 
         stage('Run Docker Container Locally') {
             steps {
